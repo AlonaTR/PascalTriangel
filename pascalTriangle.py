@@ -8,5 +8,4 @@ for column in range(input_num+1):
         list[column].append(list[column-1][row-1] + list[column-1][row])
     if input_num != 0:
         list[column].append(1)
-        
 print(list)
