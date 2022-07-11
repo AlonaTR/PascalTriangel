@@ -13,9 +13,16 @@ def show_one_movie(request, id_movie):
 
 def add_movie(request):
     if request.method == 'POST':
-        movie = Movie(name=request.POST['name'], rating=request.POST['rating'], year=request.POST['year'], budget=request.POST['budget'])
-        movie.save()
-        return render(request, 'movie_app/one_movie.html', {'movie':movie})
+        form = NewForm(request.POST)
+        if form.is_valid():
+            Movie.objects.create(**form.cleaned_data)  
+            return render(request, 'movie_app/one_movie.html', {'movie':form.cleaned_data})
+
+        
+    # if request.method == 'POST':
+    #     movie = Movie(name=request.POST['name'], rating=request.POST['rating'], year=request.POST['year'], budget=request.POST['budget'])
+    #     movie.save()
+    #     return render(request, 'movie_app/one_movie.html', {'movie':movie})
     else:
         form = NewForm()
     return render(request, 'movie_app/add_movie.html', {'form':form})
