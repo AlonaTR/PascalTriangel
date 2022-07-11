@@ -1,10 +1,14 @@
-import re
-from urllib import request
 from django import forms
+from matplotlib import widgets
 from .models import Movie
 
-class NewForm(forms.Form):
-    name = forms.CharField(max_length=40, widget=forms.TextInput(attrs={'placeholder': 'Name'}))
-    rating = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
-    year = forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Year'}))
-    budget= forms.IntegerField(widget=forms.TextInput(attrs={'placeholder': 'Budget'}))
+class NewForm(forms.ModelForm):
+    class Meta:
+        model=Movie
+        fields= ['name', 'rating', 'year', 'budget']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'rating': forms.NumberInput(attrs={'class': 'form-control'}),
+            'year': forms.NumberInput(attrs={'class': 'form-control'}),
+            'budget': forms.NumberInput(attrs={'class': 'form-control'})
+        }
